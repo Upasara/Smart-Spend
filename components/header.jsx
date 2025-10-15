@@ -10,8 +10,10 @@ import Link from 'next/link';
 import React from 'react';
 import { Button } from './ui/button';
 import { LayoutDashboard, PenBox } from 'lucide-react';
+import { checkUser } from '@/lib/checkUser';
 
-const header = () => {
+const header = async () => {
+ await checkUser();
  return (
   <div className='fixed top-0 w-full bg-white/50 backdrop-blur-[2px] z-50 border-b shadow-md'>
    <nav className='container mx-auto p-4 flex items-center justify-between'>
