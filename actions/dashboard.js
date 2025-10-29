@@ -10,6 +10,12 @@ const serializeTransaction = (obj) => {
     if(obj.balance){
         serialized.balance = obj.balance.toNumber()
     }
+
+    if(obj.amount){
+        serialized.amount = obj.amount.toNumber()
+    }
+
+    return serialized
 }
 
 async function createAccount(data){
@@ -61,4 +67,32 @@ async function createAccount(data){
     }
 }
 
-export {createAccount}
+async function getUserAccounts(){
+    const {userId} = await auth()
+    if(!userId) throw new Error("User Not Authorized !")
+
+    const user = await db.user.findUnique({
+        where : {clerkUserId : userId}
+    })
+
+    if(!user){
+        throw new Error("User Not Found !")
+    }
+
+    const accounts = await db.account.findMany({
+        where : {userId : user.id},
+        orderBy : {createdAt : "desc"},
+        include : {
+            _count : {
+                select : {
+                    transactions : true
+                }
+            }
+        }
+    })
+
+    const serializedAccount = accounts.map(serializeTransaction)
+    return serializedAccount
+} 
+
+export {createAccount, getUserAccounts}
