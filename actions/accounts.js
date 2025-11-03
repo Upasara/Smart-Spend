@@ -71,9 +71,9 @@ async function getAccountWithTransaction(accountId){
 
     if(!account) return null
 
-    return {
-        ...serializedTransaction(account)
-    }
+    const serializedTransaction = JSON.parse(JSON.stringify(account))
+
+    return serializedTransaction
 }
 
 export {updateDefaultAccount, getAccountWithTransaction}
