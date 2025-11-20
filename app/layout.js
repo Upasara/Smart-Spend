@@ -1,15 +1,11 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import Header from "@/components/header";
 import "./globals.css";
+import {Inter} from "next/font/google"
+import { ClerkProvider } from "@clerk/nextjs";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const inter = Inter({subsets:['latin']})
+ 
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata = {
   title: "Create Next App",
@@ -18,12 +14,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <ClerkProvider>
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.className} bg-white`}
       >
-        {children}
+        {/* header */}
+        <Header/>
+        <main className="min-h-screen ">{children}</main>
+        {/* footer */}
+        <footer className="bg-green-100 p-5">
+          <div className="container mx-auto text-center text-gray-600 ">
+            <p>Developed by SAM :)</p>
+          </div>
+        </footer>
       </body>
+
     </html>
+    </ClerkProvider>
   );
 }
