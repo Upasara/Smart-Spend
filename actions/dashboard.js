@@ -10,9 +10,15 @@ const serializeTransaction = (obj) =>{
     if(obj.balance){
         serialized.balance = obj.balance.toNumber()
     }
+
+    if(obj.amount){
+        serialized.amount = obj.amount.toNumber()
+    }
+
+    return serialized
 }
 
-export async function createAccount(params) {
+export async function createAccount(data) {
     try{
         const {userId} = await auth()
         if(!userId) {
@@ -27,7 +33,7 @@ export async function createAccount(params) {
     }
 
     //convert balance to float
-    const balanceFloat = parseFloat(params.balance)
+    const balanceFloat = parseFloat(data.balance)
     if(isNaN(balanceFloat)){
         throw new Error("Invalid balance amount !")
     }
@@ -37,19 +43,19 @@ export async function createAccount(params) {
         where: {userId : user.id}
     })
 
-    const shouldBeDefault = existingAccounts.length === 0 ? true : params.isDefault
+    const shouldBeDefault = existingAccounts.length === 0 ? true : data.isDefault;
     //if this account should be default, unset other default accounts
     if(shouldBeDefault) {
-        await db.account.updatMany({
+        await db.account.updateMany({
             where:{ userId: user.id, isDefault: true },
-            params: {isDefault: false}
+            data: {isDefault: false}
         })
     }
 
     //create account
     const account = await db.account.create({
-        params:{
-            ...params,
+        data:{
+            ...data,
             balance: balanceFloat,
             userId: user.id,
             isDefault: shouldBeDefault, 
@@ -61,7 +67,39 @@ export async function createAccount(params) {
     revalidatePath("/dashboard")
     return {success:true, data: serializedAccount}
     }catch(error){
-        throw new Error(error.message)
+        throw new Error(error.message )
     }
     
+}
+
+export async function getUserAccounts() {
+    const {userId} = await auth()
+    if(!userId){
+        throw new Error("Unauthorized !")
+    }
+
+    const user = await db.user.findUnique({
+        where:{
+            clerkUserId: userId
+        }
+    })
+
+    if(!user){
+        throw new Error("User not found !")
+    }
+
+    const accounts = await db.account.findMany({
+        where: { userId:  user.id},
+        orderBy: { createdAt: 'desc' },
+        include: {
+            _count: {
+                select: {
+                    transactions: true
+                }
+            }
+        }
+    })
+
+    const serializedAccount =  accounts.map(serializeTransaction)
+    return serializedAccount
 }
