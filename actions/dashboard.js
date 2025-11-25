@@ -67,7 +67,7 @@ export async function createAccount(data) {
     revalidatePath("/dashboard")
     return {success:true, data: serializedAccount}
     }catch(error){
-        throw new Error(error.message )
+        return { success:false, error: error.message}
     }
     
 }
