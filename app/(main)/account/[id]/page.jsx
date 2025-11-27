@@ -13,7 +13,7 @@ const AccountsPage = async ({ params }) => {
 
  const { transactions, ...account } = accountData;
  return (
-  <div className=' p-5 '>
+  <div className=' p-5  '>
    <div className='flex items-center justify-between'>
     <div>
      <h1 className='uppercase text-3xl font-semibold'>{account.name}</h1>
