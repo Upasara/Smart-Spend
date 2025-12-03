@@ -10,6 +10,17 @@ import {
 } from '@/components/ui/select';
 import { endOfDay, format, startOfDay, subDays } from 'date-fns';
 import React, { useMemo, useState } from 'react';
+import {
+ Bar,
+ BarChart,
+ CartesianGrid,
+ Legend,
+ Rectangle,
+ ResponsiveContainer,
+ Tooltip,
+ XAxis,
+ YAxis,
+} from 'recharts';
 
 const DATE_RANGES = {
  '7D': { label: 'Last 7 Days', days: 7 },
@@ -67,26 +78,85 @@ const AccountChart = ({ transactions }) => {
  }, [filteredData]);
 
  return (
-  <Card>
-   <CardHeader className='flex items-center justify-between pb-7 space-y-0'>
-    <CardTitle>Transaction Overview</CardTitle>
-    <Select defaultValue={dateRange} onValueChange={setDateRange}>
-     <SelectTrigger>
-      <SelectValue placeholder='Select Range' />
-     </SelectTrigger>
-     <SelectContent>
-      {Object.entries(DATE_RANGES).map(([key, { label }]) => {
-       return (
-        <SelectItem key={key} value={key}>
-         {label}
-        </SelectItem>
-       );
-      })}
-     </SelectContent>
-    </Select>
-   </CardHeader>
-   <CardContent></CardContent>
-  </Card>
+  <div className='mt-5'>
+   <Card>
+    <CardHeader className='flex items-center justify-between pb-7 space-y-0'>
+     <CardTitle>Transaction Overview</CardTitle>
+     <Select defaultValue={dateRange} onValueChange={setDateRange}>
+      <SelectTrigger>
+       <SelectValue placeholder='Select Range' />
+      </SelectTrigger>
+      <SelectContent>
+       {Object.entries(DATE_RANGES).map(([key, { label }]) => {
+        return (
+         <SelectItem key={key} value={key}>
+          {label}
+         </SelectItem>
+        );
+       })}
+      </SelectContent>
+     </Select>
+    </CardHeader>
+    <CardContent>
+     <div className='flex justify-around mb-6 text-sm'>
+      <div className='text-center'>
+       <p className='text-muted-foreground'>Total Income</p>
+       <p className='text-lg font-bold text-green-600'>
+        ${totals.income.toFixed(2)}
+       </p>
+      </div>
+      <div className='text-center'>
+       <p className='text-muted-foreground'>Total Expenses</p>
+       <p className='text-lg font-bold text-red-600'>
+        ${totals.expense.toFixed(2)}
+       </p>
+      </div>
+      <div className='text-center'>
+       <p className='text-muted-foreground'>Net</p>
+       <p
+        className={`text-lg font-bold ${
+         totals.income - totals.expense >= 0 ? 'text-green-600' : 'text-red-700'
+        }`}
+       >
+        ${(totals.income - totals.expense).toFixed(2)}
+       </p>
+      </div>
+     </div>
+     {/* Chart Placeholder */}
+     <div>
+      <ResponsiveContainer width='100%' height={300}>
+       <BarChart
+        data={filteredData}
+        margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
+       >
+        <CartesianGrid strokeDasharray='3 3' vertical={false} />
+        <XAxis dataKey='date' />
+        <YAxis
+         fontSize={12}
+         tickLine={false}
+         axisLine={false}
+         tickFormatter={(value) => `$${value}`}
+        />
+        <Tooltip wrapperClassName='rounded-md shadow-md' />
+        <Legend />
+        <Bar
+         dataKey='income'
+         name='Income'
+         fill='#16a34a'
+         radius={[4, 4, 0, 0]}
+        />
+        <Bar
+         dataKey='expense'
+         name='Expense'
+         fill='#dc2626'
+         radius={[4, 4, 0, 0]}
+        />
+       </BarChart>
+      </ResponsiveContainer>
+     </div>
+    </CardContent>
+   </Card>
+  </div>
  );
 };
 

@@ -176,7 +176,7 @@ const TransactionTable = ({ transactions }) => {
  };
 
  return (
-  <div className='mt-10'>
+  <div className='mt-5'>
    {deleteLoading && (
     <BarLoader className='mt-4' width={'100%'} color='#16a34a' />
    )}
