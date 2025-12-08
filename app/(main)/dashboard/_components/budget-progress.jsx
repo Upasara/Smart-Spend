@@ -1,15 +1,20 @@
 'use client';
 
+import { updateBudget } from '@/actions/budget';
 import { Button } from '@/components/ui/button';
 import {
  Card,
+ CardContent,
  CardDescription,
  CardHeader,
  CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Progress } from '@/components/ui/progress';
+import useFetch from '@/hooks/use-fetch';
 import { Check, Pencil, X } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 const BudegetProgress = ({ initialBudget, currentExpenses }) => {
  const [isEditting, setIsEditting] = useState(false);
@@ -21,27 +26,71 @@ const BudegetProgress = ({ initialBudget, currentExpenses }) => {
   ? (currentExpenses / initialBudget.amount) * 100
   : 0;
 
- const handleUpdateBudget = async () => {};
- const handleCancelEdit = () => {};
+ const {
+  loading: isLoading,
+  fn: updateBudgetFn,
+  data: updatedBudget,
+  error,
+ } = useFetch(updateBudget);
+
+ const handleUpdateBudget = async () => {
+  const amount = parseFloat(newBudget);
+  if (isNaN(amount) || amount <= 0) {
+   toast.error('Please enter a valid budget amount !');
+   return;
+  }
+
+  await updateBudgetFn(amount);
+ };
+
+ useEffect(() => {
+  if (updatedBudget?.success) {
+   setIsEditting(false);
+   toast.success('Budget updated successfully');
+  }
+ }, [updatedBudget]);
+
+ useEffect(() => {
+  if (error) {
+   toast.error(error.message || 'Error updating budget !');
+  }
+ }, []);
+
+ const handleCancelEdit = () => {
+  setNewBudget(initialBudget?.amount?.toString() || '');
+  setIsEditting(false);
+ };
 
  return (
   <Card>
-   <CardHeader>
+   <CardHeader className='flex flex-row items-center justify-between'>
     <CardTitle>Monthly Budget (Default Account)</CardTitle>
     <div>
      {isEditting ? (
-      <div>
+      <div className='flex items-center gap-2'>
        <Input
         type='number'
         value={newBudget}
         onChange={(e) => setNewBudget(e.target.value)}
         placeholder='Enter new budget'
+        className='w-32'
         autoFocus
+        disabled={isLoading}
        />
-       <Button variant='ghost' size='icon' onClick={handleUpdateBudget}>
+       <Button
+        variant='ghost'
+        size='icon'
+        onClick={handleUpdateBudget}
+        disabled={isLoading}
+       >
         <Check className='h-3 w-3 text-green-600' />
        </Button>
-       <Button variant='ghost' size='icon' onClick={handleCancelEdit}>
+       <Button
+        variant='ghost'
+        size='icon'
+        onClick={handleCancelEdit}
+        disabled={isLoading}
+       >
         <X className='h-3  w-3 text-red-600' />
        </Button>
       </div>
@@ -65,8 +114,26 @@ const BudegetProgress = ({ initialBudget, currentExpenses }) => {
       </>
      )}
     </div>
-    <CardDescription></CardDescription>
    </CardHeader>
+   <CardContent>
+    {initialBudget && (
+     <div>
+      <Progress
+       value={persentUsed}
+       extraStyles={`${
+        persentUsed >= 90
+         ? 'bg-red-600'
+         : persentUsed >= 75
+         ? 'bg-yellow-600'
+         : 'bg-green-600'
+       }`}
+      />
+      <p className='text-xs text-muted-foreground text-right'>
+       {persentUsed.toFixed(1)}% used{' '}
+      </p>
+     </div>
+    )}
+   </CardContent>
   </Card>
  );
 };

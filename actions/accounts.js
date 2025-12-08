@@ -108,7 +108,7 @@ export async function  bulkDeleteTransactions(transactionIds){
         })
 
         const accountBalanceChanges = transactions.reduce((acc, transaction) => {
-            const change = transaction.type ==="EXPENSE" ? transaction.amount : -transaction.amount
+            const change = transaction.type === "EXPENSE" ? transaction.amount : -transaction.amount
 
             acc[transaction.accountId] = (acc[transaction.accountId] || 0 ) + change
             return acc
@@ -126,14 +126,24 @@ export async function  bulkDeleteTransactions(transactionIds){
             for(const [accountId, balanceChange] of Object.entries(accountBalanceChanges)) {
                 await tx.account.update({
                     where: {id: accountId},
-                    data:{balance: {increment: balanceChange}}
-
+                    data:{
+                        balance: {
+                            increment: balanceChange
+                        }}
                 })
             }
         })
 
+
         revalidatePath('/dashboard')
-        revalidatePath('/account/[id]', page)
+
+        revalidatePath(`/account/[id]`);
+
+        
+        // const affectedAccountIds = Object.keys(accountBalanceChanges)
+        // for(const accountId of affectedAccountIds){
+        //     revalidatePath(`/account/${accountId}`)
+        // }
 
         return{success:true}
     }catch(error){

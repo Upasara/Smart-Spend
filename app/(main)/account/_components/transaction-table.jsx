@@ -85,7 +85,7 @@ const TransactionTable = ({ transactions }) => {
   setSelectedIds((current) =>
    current.length === filteredTransactions.length
     ? []
-    : filteredTransactions.map((tx) => tx.id)
+    : filteredTransactions.map((t) => t.id)
   );
  };
  const filteredTransactions = useMemo(() => {
@@ -144,7 +144,7 @@ const TransactionTable = ({ transactions }) => {
   }));
  };
 
- const handleBulkdDelete = async () => {
+ const handleBulkDelete = async () => {
   if (
    !window.confirm(
     `Are you sure you want to delete ${selectedIds.length} transactions?`
@@ -219,7 +219,7 @@ const TransactionTable = ({ transactions }) => {
 
      {selectedIds.length > 0 && (
       <div className='flex items-center gap-1'>
-       <Button variant='destructive' size='sm' onClick={handleBulkdDelete}>
+       <Button variant='destructive' size='sm' onClick={handleBulkDelete}>
         <Trash className='h-3 w-3' />
         Delete Selected ({selectedIds.length})
        </Button>

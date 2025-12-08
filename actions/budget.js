@@ -46,7 +46,7 @@ export async function updateBudget(amount){
             throw new Error("Unauthorized !")
         }
 
-        const {user} = await db.user.findUnique({
+        const user = await db.user.findUnique({
             where: {clerkUserId: userId}
         })
 
