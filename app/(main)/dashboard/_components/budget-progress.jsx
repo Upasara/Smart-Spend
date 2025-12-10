@@ -124,11 +124,11 @@ const BudegetProgress = ({ initialBudget, currentExpenses }) => {
         persentUsed >= 90
          ? 'bg-red-600'
          : persentUsed >= 75
-         ? 'bg-yellow-600'
-         : 'bg-green-600'
+           ? 'bg-yellow-600'
+           : 'bg-green-600'
        }`}
       />
-      <p className='text-xs text-muted-foreground text-right'>
+      <p className='text-xs text-muted-foreground text-right  '>
        {persentUsed.toFixed(1)}% used{' '}
       </p>
      </div>
