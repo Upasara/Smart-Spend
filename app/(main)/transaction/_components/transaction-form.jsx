@@ -27,6 +27,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import RecieptScanner from './reciept-scanner';
 
 const AddTransactionForm = ({ accounts, categories }) => {
  const router = useRouter();
@@ -82,9 +83,25 @@ const AddTransactionForm = ({ accounts, categories }) => {
   }
  }, [transactionSchema, transactionLoading]);
 
+ const handleSubmitComplete = (scannedData) => {
+  if (scannedData) {
+   setValue('amount', scannedData.amount.toString());
+   setValue('date', new Date(scannedData.date));
+   if (scannedData.description) {
+    setValue('description', scannedData.description);
+   }
+   if (scannedData.category) {
+    setValue('category', scannedData.category);
+   }
+  }
+  console.log(scannedData);
+ };
+
  return (
   <form onSubmit={handleSubmit(onSubmit)}>
    {/* AI reciept scanner */}
+   <RecieptScanner onScanComplete={handleSubmitComplete} />
+   {/* manual data entry */}
    <div className='space-y-2'>
     <label>Type</label>
     <Select
