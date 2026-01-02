@@ -94,7 +94,6 @@ const AddTransactionForm = ({ accounts, categories }) => {
     setValue('category', scannedData.category);
    }
   }
-  console.log(scannedData);
  };
 
  return (
