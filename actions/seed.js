@@ -15,11 +15,18 @@ const CATEGORIES = {
  ],
 
  EXPENSE: [
-  { name: 'rent', range: [500, 1000] },
+  { name: 'housing', range: [500, 1000] },
   { name: 'groceries', range: [200, 500] },
   { name: 'utilities', range: [100, 300] },
   { name: 'entertainment', range: [100, 300] },
   { name: 'transportation', range: [50, 200] },
+  { name: 'food', range: [100, 300] },
+  { name: 'shopping', range: [100, 400] },
+  { name: 'healthcare', range: [100, 300] },
+  { name: 'education', range: [200, 500] },
+  { name: 'insuarance', range: [150, 400] },
+  { name: 'gifts', range: [50, 200] },
+  { name: 'other-expenses', range: [50, 150] },
  ],
 };
 
@@ -42,7 +49,7 @@ export async function seedTransactions() {
   const transactions = [];
   let totalBalance = 0;
 
-  for (let i = 7; i >= 0; i--) {
+  for (let i = 10; i >= 0; i--) {
    const date = subDays(new Date(), i);
 
    //generate 1-3 transactions per day

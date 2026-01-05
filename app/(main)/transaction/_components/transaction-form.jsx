@@ -60,6 +60,7 @@ const AddTransactionForm = ({ accounts, categories }) => {
  const type = watch('type');
  const isRecurring = watch('isRecurring');
  const date = watch('date');
+ const selectedCategory = watch('category');
 
  const filteredCategories = categories.filter(
   (category) => category.type === type
@@ -74,12 +75,13 @@ const AddTransactionForm = ({ accounts, categories }) => {
  };
 
  useEffect(() => {
+  if (!transactionResult) return;
   if (transactionResult?.success && !transactionLoading) {
    toast.success('Transaction created successfully !');
    reset();
    router.push(`/account/${transactionResult.data.accountId}`);
   } else {
-   toast.error(transactionResult.error);
+   toast.error(transactionResult.error || 'Failed to create transaction !');
   }
  }, [transactionSchema, transactionLoading]);
 
@@ -165,8 +167,8 @@ const AddTransactionForm = ({ accounts, categories }) => {
    <div className='space-y-2'>
     <label>Category</label>
     <Select
+     value={selectedCategory}
      onValueChange={(value) => setValue('category', value)}
-     defaultValue={getValues('category')}
     >
      <SelectTrigger>
       <SelectValue placeholder='Select category' />

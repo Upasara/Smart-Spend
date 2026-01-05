@@ -92,7 +92,7 @@ export async function createTransaction(data) {
 
   return { success: true, data: serializedAmount(transaction) };
  } catch (error) {
-  return { success: false, error: error.message };
+  return { success: false, error: error.message || 'Something went wrong !' };
  }
 }
 
@@ -131,7 +131,7 @@ export async function scanReciept(file) {
   - Description or items purchased (brief summary)
   - Merchant/Store name
   - Suggested category (one of: housing, transportation, groceries, utilities, entertainment, food, shopping,
-   healthcare, education, personal, travel, insuarance, gifts, bills, other-expences)
+   healthcare, education, insuarance, gifts, other-expences)
   
   Only respond with valid JSON in this exact format:
   {

@@ -28,6 +28,7 @@ const RecieptScanner = ({ onScanComplete }) => {
   if (scannedData && !scanRecieptLoading) {
    onScanComplete(scannedData);
    toast.success('Reciept scanned successfully');
+   console.log(scannedData);
   }
  }, [scanRecieptLoading, scannedData]);
 
