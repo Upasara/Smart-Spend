@@ -20,7 +20,7 @@ const DashboardPage = async () => {
 
  const transactions = await getDashboardData();
  return (
-  <div className='space-y-5'>
+  <div className='space-y-5 pt-5'>
    {/* budget progress */}
    {defaultAccount && (
     <BudegetProgress

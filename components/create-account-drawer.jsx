@@ -86,7 +86,7 @@ const CreateAccountDrawer = ({ children }) => {
        <label htmlFor='name' className='text-sm font-medium'>
         Account Name
        </label>
-       <Input id='name' {...register('name')} className='mt-1' />
+       <Input id='name' {...register('name')} className='mt-1 uppercase' />
        {errors.name && (
         <p className='text-sm mt-0.5 text-red-600 opacity-80'>
          {errors.name.message}

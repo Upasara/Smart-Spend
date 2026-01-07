@@ -62,9 +62,11 @@ const BudegetProgress = ({ initialBudget, currentExpenses }) => {
  };
 
  return (
-  <Card>
+  <Card className='hover:-translate-y-1 hover:shadow-md duration-300'>
    <CardHeader className='flex flex-row items-center justify-between'>
-    <CardTitle>Monthly Budget (Default Account)</CardTitle>
+    <CardTitle className='text-lg font-medium'>
+     Monthly Budget ( Default Account )
+    </CardTitle>
     <div>
      {isEditting ? (
       <div className='flex items-center gap-2'>
@@ -95,10 +97,10 @@ const BudegetProgress = ({ initialBudget, currentExpenses }) => {
        </Button>
       </div>
      ) : (
-      <>
+      <div className='flex flex-col items-end'>
        <CardDescription>
         {initialBudget
-         ? `$${currentExpenses.toFixed(2)} of $${initialBudget.amount.toFixed(
+         ? `Rs.${currentExpenses.toFixed(2)} of Rs.${initialBudget.amount.toFixed(
             2
            )} spent`
          : 'No Budget Set'}
@@ -107,11 +109,11 @@ const BudegetProgress = ({ initialBudget, currentExpenses }) => {
         variant='ghost'
         size='icon'
         onClick={() => setIsEditting(true)}
-        className='h-4 w-4'
+        className='h-6 w-6 hover:cursor-pointer'
        >
-        <Pencil className='h-3 w-3' />
+        <Pencil className='h-3 w-3 ' />
        </Button>
-      </>
+      </div>
      )}
     </div>
    </CardHeader>
@@ -128,7 +130,7 @@ const BudegetProgress = ({ initialBudget, currentExpenses }) => {
            : 'bg-green-600'
        }`}
       />
-      <p className='text-xs text-muted-foreground text-right  '>
+      <p className='text-xs text-muted-foreground text-right mt-1 '>
        {persentUsed.toFixed(1)}% used{' '}
       </p>
      </div>

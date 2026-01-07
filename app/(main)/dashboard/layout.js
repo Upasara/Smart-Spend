@@ -1,13 +1,19 @@
 import React, { Suspense } from 'react';
 import DashboardPage from './page';
-import { BarLoader } from 'react-spinners';
+import { SyncLoader } from 'react-spinners';
 
 const DashboardLayout = () => {
  return (
-  <div className='p-5'>
-   <h1 className='text-3xl md:text-4xl font-semibold mb-5'>Dashboard</h1>
+  <div className='p-5 pt-10'>
+   <h1 className='text-3xl md:text-4xl font-semibold mb-5 text-shadow-xs'>
+    Dashboard
+   </h1>
    <Suspense
-    fallback={<BarLoader className='mt-4' width={'100%'} color='#16a34a' />}
+    fallback={
+     <div className='min-h-screen flex justify-center pt-20'>
+      <SyncLoader width={'100%'} color='#16a34a' />
+     </div>
+    }
    >
     <DashboardPage />
    </Suspense>
