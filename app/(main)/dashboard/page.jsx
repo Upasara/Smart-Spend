@@ -37,10 +37,10 @@ const DashboardPage = async () => {
    {/* account grid */}
    <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4'>
     <CreateAccountDrawer>
-     <Card className='hover:shadow-md transition-shadow cursor-pointer border-dashed'>
+     <Card className='hover:shadow-md transition-shadow cursor-pointer border-dashed border-green-200'>
       <CardContent className='flex flex-col items-center justify-center text-muted-foreground h-full pt-5'>
-       <Plus className='h-10 w-10 mb-2' />
-       <p className='text-sm font-medium'>Create an Account</p>
+       <Plus className='h-10 w-10 mb-2 text-green-600' />
+       <p className='text-sm font-medium text-green-600'>Create an Account</p>
       </CardContent>
      </Card>
     </CreateAccountDrawer>

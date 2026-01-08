@@ -78,14 +78,14 @@ const AccountChart = ({ transactions }) => {
 
  return (
   <div className='mt-5'>
-   <Card>
+   <Card className=' hover:shadow-md hover:border-green-300 duration-300 border  border-green-200'>
     <CardHeader className='flex items-center justify-between pb-7 space-y-0'>
      <CardTitle>Transaction Overview</CardTitle>
      <Select defaultValue={dateRange} onValueChange={setDateRange}>
-      <SelectTrigger>
+      <SelectTrigger className='border border-green-200 focus-visible:ring-0 focus-visible:border-green-300 hover:cursor-pointer'>
        <SelectValue placeholder='Select Range' />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className='border border-green-300'>
        {Object.entries(DATE_RANGES).map(([key, { label }]) => {
         return (
          <SelectItem key={key} value={key}>

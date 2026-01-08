@@ -75,18 +75,22 @@ const CreateAccountDrawer = ({ children }) => {
  return (
   <Drawer open={open} onOpenChange={setOpen}>
    <DrawerTrigger asChild>{children}</DrawerTrigger>
-   <DrawerContent>
+   <DrawerContent className='border border-green-200'>
     <DrawerHeader>
      <DrawerTitle className='text-lg'>Create an Account</DrawerTitle>
     </DrawerHeader>
     <div className='px-4 pb-4'>
      <form className='space-y-4' onSubmit={handleSubmit(onSubmit)}>
       {/* name */}
-      <div>
+      <div className=''>
        <label htmlFor='name' className='text-sm font-medium'>
         Account Name
        </label>
-       <Input id='name' {...register('name')} className='mt-1 uppercase' />
+       <Input
+        id='name'
+        {...register('name', { setValueAs: (v) => v?.toUpperCase() })}
+        className='mt-1 uppercase focus-visible:ring-0 focus-visible:border-green-300 '
+       />
        {errors.name && (
         <p className='text-sm mt-0.5 text-red-600 opacity-80'>
          {errors.name.message}
@@ -105,7 +109,7 @@ const CreateAccountDrawer = ({ children }) => {
         <SelectTrigger id='type' className='w-full mt-1'>
          <SelectValue placeholder='Select Type' />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className='border border-green-300'>
          <SelectItem value='CURRENT'>CURRENT</SelectItem>
          <SelectItem value='SAVINGS'>SAVINGS</SelectItem>
         </SelectContent>
@@ -127,7 +131,7 @@ const CreateAccountDrawer = ({ children }) => {
         step='0.01'
         placeholder='0.00'
         {...register('balance')}
-        className='mt-1'
+        className='mt-1 focus-visible:ring-0 focus-visible:border-green-300'
        />
        {errors.balance && (
         <p className='text-sm mt-0.5 text-red-600 opacity-80'>

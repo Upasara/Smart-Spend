@@ -5,7 +5,7 @@ import { SyncLoader } from 'react-spinners';
 const DashboardLayout = () => {
  return (
   <div className='p-5 pt-10'>
-   <h1 className='text-3xl md:text-4xl font-semibold mb-5 text-shadow-xs'>
+   <h1 className='text-3xl md:text-4xl font-semibold mb-5 text-shadow-xs text-green-600'>
     Dashboard
    </h1>
    <Suspense

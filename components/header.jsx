@@ -10,7 +10,7 @@ import { checkUser } from '@/lib/checkUser';
 const Header = async () => {
  await checkUser();
  return (
-  <div className='fixed top-0 w-full bg-green-200/50 backdrop-blur-[2px] border-b z-50'>
+  <div className='fixed top-0 w-full bg-green-200/50 backdrop-blur-[2px] border-b border-green-200 z-50'>
    <nav className=' flex items-center justify-between px-3 py-1'>
     <Link href='/'>
      <Image src={LOGO} alt='LOGO' className='h-14 w-auto object-contain' />

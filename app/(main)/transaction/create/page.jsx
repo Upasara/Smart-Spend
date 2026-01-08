@@ -16,16 +16,18 @@ const AddTransactionPage = async ({ searchParams }) => {
  }
 
  return (
-  <div className=' p-5  max-w-6xl'>
-   <h1 className='text-5xl mb-8 font-semibold'>
+  <div className=' p-5  max-w-4xl flex flex-col mx-auto pt-10'>
+   <h1 className='text-3xl md:text-4xl mb-8 font-semibold text-center text-green-600 text-shadow-xs'>
     {editId ? 'Edit' : 'Add'} Transaction
    </h1>
-   <AddTransactionForm
-    accounts={accounts}
-    categories={defaultCategories}
-    editMode={!!editId}
-    initialData={initialData}
-   />
+   <div>
+    <AddTransactionForm
+     accounts={accounts}
+     categories={defaultCategories}
+     editMode={!!editId}
+     initialData={initialData}
+    />
+   </div>
   </div>
  );
 };

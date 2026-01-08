@@ -4,7 +4,7 @@ import { getAccountWithTransactions } from '@/actions/accounts';
 import { notFound } from 'next/navigation';
 import React, { Suspense } from 'react';
 import TransactionTable from '../_components/transaction-table';
-import { BarLoader } from 'react-spinners';
+import { BarLoader, SyncLoader } from 'react-spinners';
 import AccountChart from '../_components/account-chart';
 
 const AccountsPage = async ({ params }) => {
@@ -16,17 +16,20 @@ const AccountsPage = async ({ params }) => {
 
  const { transactions, ...account } = accountData;
  return (
-  <div className=' p-5  '>
+  <div className=' p-5  pt-10'>
    <div className='flex items-center justify-between'>
     <div>
-     <h1 className='uppercase text-3xl font-semibold'>{account.name}</h1>
+     <h1 className='uppercase text-3xl font-semibold text-green-600 text-shadow-xs'>
+      {account.name}
+     </h1>
      <p className='text-muted-foreground'>
       {account.type.charAt(0) + account.type.slice(1).toLowerCase()} Account
      </p>
     </div>
     <div className='text-right'>
-     <div className='text-xl font-semibold'>
-      Rs.{parseFloat(account.balance).toFixed(2)}
+     <div className='text-xl md:text-2xl font-semibold'>
+      <span className='text-base'>Rs.</span>
+      {parseFloat(account.balance).toFixed(2)}
      </div>
      <p className='text-sm text-muted-foreground'>
       {account._count.transactions} Transaction
@@ -35,13 +38,21 @@ const AccountsPage = async ({ params }) => {
    </div>
    {/* chart */}
    <Suspense
-    fallback={<BarLoader className='mt-3' width={'100%'} color='#16a34a' />}
+    fallback={
+     <div className='min-h-screen flex justify-center pt-20'>
+      <SyncLoader width={'100%'} color='#16a34a' />
+     </div>
+    }
    >
     <AccountChart transactions={transactions} />
    </Suspense>
    {/* transaction table */}
    <Suspense
-    fallback={<BarLoader className='mt-3' width={'100%'} color='#16a34a' />}
+    fallback={
+     <div className='min-h-screen flex justify-center pt-20'>
+      <SyncLoader width={'100%'} color='#16a34a' />
+     </div>
+    }
    >
     <TransactionTable transactions={transactions} />
    </Suspense>

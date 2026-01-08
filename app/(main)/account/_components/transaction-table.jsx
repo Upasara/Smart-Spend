@@ -50,7 +50,7 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useMemo, useState } from 'react';
-import { BarLoader } from 'react-spinners';
+import { BarLoader, SyncLoader } from 'react-spinners';
 import { toast } from 'sonner';
 
 const TransactionTable = ({ transactions }) => {
@@ -178,15 +178,17 @@ const TransactionTable = ({ transactions }) => {
  return (
   <div className='mt-5'>
    {deleteLoading && (
-    <BarLoader className='mt-4' width={'100%'} color='#16a34a' />
+    <div className='flex justify-center mt-5 mb-5'>
+     <SyncLoader width={'100%'} color='#16a34a' />
+    </div>
    )}
    {/* filters */}
    <div className='flex flex-col md:flex-row gap-4 '>
     {/* search */}
-    <div className='relative flex-1'>
+    <div className='relative flex-1  '>
      <Search className='absolute left-2 h-4 w-4 top-2.5 text-muted-foreground' />
      <Input
-      className='pl-8'
+      className='pl-8 focus-visible:ring-0 focus-visible:border-green-300  focus-visible:bg-white duration-300 transition-all'
       placeholder='Search Transactions...'
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
@@ -195,10 +197,10 @@ const TransactionTable = ({ transactions }) => {
     {/*  filters */}
     <div className='flex gap-4'>
      <Select value={typeFilter} onValueChange={setTypeFilter}>
-      <SelectTrigger>
+      <SelectTrigger className='hover:cursor-pointer'>
        <SelectValue placeholder='All Types' />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className='border-green-300'>
        <SelectItem value='INCOME'>INCOME</SelectItem>
        <SelectItem value='EXPENSE'>EXPENSE</SelectItem>
       </SelectContent>
@@ -208,10 +210,10 @@ const TransactionTable = ({ transactions }) => {
       value={recurringFilter}
       onValueChange={(value) => setRecurringFilter(value)}
      >
-      <SelectTrigger>
+      <SelectTrigger className='hover:cursor-pointer'>
        <SelectValue placeholder='All Transaction' />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className='border-green-300'>
        <SelectItem value='recurring'>Recurring only</SelectItem>
        <SelectItem value='non-recurring'>Non Recurring Only</SelectItem>
       </SelectContent>
@@ -219,7 +221,12 @@ const TransactionTable = ({ transactions }) => {
 
      {selectedIds.length > 0 && (
       <div className='flex items-center gap-1'>
-       <Button variant='destructive' size='sm' onClick={handleBulkDelete}>
+       <Button
+        variant='destructive'
+        size='sm'
+        onClick={handleBulkDelete}
+        className='hover:cursor-pointer'
+       >
         <Trash className='h-3 w-3' />
         Delete Selected ({selectedIds.length})
        </Button>
@@ -232,6 +239,7 @@ const TransactionTable = ({ transactions }) => {
        size='sm'
        onClick={handleFilters}
        title='clear filters'
+       className='hover:cursor-pointer'
       >
        <X className='h-3 w-3 ' />
       </Button>
@@ -240,7 +248,7 @@ const TransactionTable = ({ transactions }) => {
    </div>
 
    {/* transaction table*/}
-   <div className='rounded-md border bg-white mt-4'>
+   <div className='rounded-md border bg-white mt-4 border-green-200 hover:shadow-md hover:border-green-300 duration-300'>
     <Table>
      <TableHeader>
       <TableRow>
@@ -361,11 +369,11 @@ const TransactionTable = ({ transactions }) => {
          <TableCell>
           <DropdownMenu>
            <DropdownMenuTrigger asChild>
-            <Button variant='ghost'>
+            <Button variant='ghost' className='hover:cursor-pointer'>
              <MoreHorizontal className='h-3 w-3' />
             </Button>
            </DropdownMenuTrigger>
-           <DropdownMenuContent>
+           <DropdownMenuContent className='border-green-300'>
             <DropdownMenuItem
              onClick={() =>
               router.push(`/transaction/create?edit=${transaction.id}`)

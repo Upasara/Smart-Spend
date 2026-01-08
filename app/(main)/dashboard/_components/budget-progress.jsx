@@ -62,7 +62,7 @@ const BudegetProgress = ({ initialBudget, currentExpenses }) => {
  };
 
  return (
-  <Card className='hover:-translate-y-1 hover:shadow-md duration-300'>
+  <Card className='hover:-translate-y-0.5 hover:shadow-md hover:border-green-300 duration-300 border  border-green-200'>
    <CardHeader className='flex flex-row items-center justify-between'>
     <CardTitle className='text-lg font-medium'>
      Monthly Budget ( Default Account )

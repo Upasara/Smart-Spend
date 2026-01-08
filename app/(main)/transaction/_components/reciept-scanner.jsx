@@ -47,7 +47,7 @@ const RecieptScanner = ({ onScanComplete }) => {
    />
    <Button
     type='button'
-    className='w-full h-10 mb-5'
+    className='w-full h-10 mb-5 bg-green-600 hover:bg-green-700 duration-300 hover:shadow-md hover:cursor-pointer shadow-xs'
     onClick={() => fileInputRef.current?.click()}
     disabled={scanRecieptLoading}
    >

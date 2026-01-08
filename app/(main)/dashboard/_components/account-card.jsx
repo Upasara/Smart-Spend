@@ -48,7 +48,10 @@ const AccountCard = ({ account }) => {
  }, [error]);
 
  return (
-  <Card className='hover:shadow-md transition-shadow duration-200 group relative'>
+  <Card
+   className='hover:shadow-md transition-all group relative
+   border border-green-200 hover:-translate-y-0.5 hover:border-green-300 duration-300 '
+  >
    <Link href={`/account/${id}`}>
     <CardHeader className='flex flex-row items-center justify-between pb-2 space-y-0'>
      <CardTitle className='uppercase text-sm font-medium'>{name}</CardTitle>
@@ -59,7 +62,9 @@ const AccountCard = ({ account }) => {
      />
     </CardHeader>
     <CardContent>
-     <div className='text-2xl font-bold'>${parseFloat(balance).toFixed(2)}</div>
+     <div className='text-2xl font-bold'>
+      Rs.{parseFloat(balance).toFixed(2)}
+     </div>
      <p className='text-xs text-muted-foreground '>
       {type.charAt(0) + type.slice(1).toLowerCase()} Account
      </p>

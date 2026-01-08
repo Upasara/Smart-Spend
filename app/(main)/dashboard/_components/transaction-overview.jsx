@@ -61,14 +61,14 @@ const DashboardOverview = ({ accounts, transactions }) => {
 
  return (
   <div className='grid gap-4 md:grid-cols-2'>
-   <Card>
+   <Card className='border border-green-200 hover:shadow-md hover:-translate-y-0.5 hover:border-green-300 duration-300'>
     <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-4'>
      <CardTitle>Recent Transactions</CardTitle>
      <Select value={selectedAccountId} onValueChange={setSelectedAccountId}>
-      <SelectTrigger className='w-[140px]'>
+      <SelectTrigger className='w-[140px] border border-green-200 focus:ring-0 focus:border-green-300 hover:cursor-pointer'>
        <SelectValue placeholder='Select Account' />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className='border border-green-300'>
        {accounts.map((account) => (
         <SelectItem key={account.id} value={account.id}>
          {account.name}
@@ -120,7 +120,7 @@ const DashboardOverview = ({ accounts, transactions }) => {
      </div>
     </CardContent>
    </Card>
-   <Card>
+   <Card className='border border-green-200 hover:shadow-md hover:-translate-y-0.5 hover:border-green-300 duration-300'>
     <CardHeader>
      <CardTitle>Monthly Expense Breakdown</CardTitle>
     </CardHeader>
@@ -146,7 +146,6 @@ const DashboardOverview = ({ accounts, transactions }) => {
            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
          </Pie>
-         <Legend />
         </PieChart>
        </ResponsiveContainer>
       </div>
