@@ -102,7 +102,7 @@ const DashboardOverview = ({ accounts, transactions }) => {
            <div
             className={cn(
              'flex items-center',
-             transaction.type === 'EXPENSE' ? 'text-green-600' : 'text-red-600'
+             transaction.type === 'EXPENSE' ? 'text-red-600' : 'text-green-600'
             )}
            >
             {transaction.type === 'EXPENSE' ? (
