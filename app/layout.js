@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
      <main className='min-h-screen '>{children}</main>
      <Toaster richColors />
      {/* footer */}
-     <footer className='bg-green-100 p-5'>
+     <footer className='bg-green-400/50 border-t-green-500 p-5'>
       <div className='container mx-auto text-center text-gray-600 '>
        <p>Developed by SAM :)</p>
       </div>
